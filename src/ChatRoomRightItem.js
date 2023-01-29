@@ -12,16 +12,7 @@ import {
   TEXT_TITLE,
 } from './colors';
 import { ViewPropTypes } from 'deprecated-react-native-prop-types'
-/*import moment from 'moment';
 
-
-const getTimeInFormat = time => {
-  if (time === '') {
-    return '';
-  }
-  const newTime = moment(time).format('hh:mm A');
-  return newTime;
-};*/
 const ChatRoomRightItem = ({message, time}) => {
   return (
     <View style={styles.parentView}>
@@ -29,7 +20,7 @@ const ChatRoomRightItem = ({message, time}) => {
         <Text style={[styles.poppinsMedium, styles.userMessage]}>
           {message}
         </Text>
-        <Text style={styles.userTime}>{/*getTimeInFormat(item.chatTime)*/}02:25:20</Text>
+        <Text style={styles.userTime}>{time}</Text>
       </Card>
     </View>
   );
