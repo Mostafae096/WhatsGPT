@@ -3,7 +3,7 @@ import OpenAI from 'openai-api';
 const OPENAI_API_KEY = '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';
 
 const openai = new OpenAI(OPENAI_API_KEY);
-export async function OpenAIAPI(text) {
+export default async function OpenAIAPI(text) {
   const gptResponse = await openai.complete({
       engine: 'text-davinci-003',
       prompt: text ,
@@ -24,4 +24,4 @@ export async function OpenAIAPI(text) {
 };
 
 //export default OpenAIAPI;
-console.log(OpenAIAPI().then(response => console.log(response)))
+//console.log(OpenAIAPI().then(response => console.log(response)))

@@ -1,4 +1,4 @@
-import React, { useRef}from 'react';
+import React, { useRef, useState} from 'react';
 import {View, FlatList, SafeAreaView} from 'react-native';
 //import _Divider from './_Divider';
 import ChatRoomLeftItem from './ChatRoomLeftItem';
@@ -18,6 +18,7 @@ const ChatRoomView = () => {
       setMessage(prevMessage => ([...prevMessage,{id: sender, text: text}]))
       gptResponse = OpenAIAPI().then(response => console.log(response))
       setMessage(prevMessage => ([...prevMessage,{id: 'gpt', text: gptResponse.text, time: getTimeInFormat(gptResponse.time)}]))
+      console.log(message)
     }
   };
 
@@ -29,22 +30,21 @@ const ChatRoomView = () => {
           extraData={refresh}
           inverted={true}
           style={{paddingTop: 0, paddingBottom: 0}}
-          data={chatRoomList}
           renderItem={() => {
-            message.map((message) => { 
-              if(message.id === 'owner') {
-                return <ChatRoomRightItem 
-                message= {message.text}
-                time = {message.time}
-                />
-              } else {
-                <ChatRoomLeftItem  
-                message= {message.text}
-                time = {message.time}
-                />
-              }
-              }
-            )
+          message.map((message) => { 
+            if(message.id === 'owner') {
+              return <ChatRoomRightItem 
+              message= {message.text}
+              time = {message.time}
+              />
+            } else {
+              <ChatRoomLeftItem  
+              message= {message.text}
+              time = {message.time}
+              />
+            }
+            }
+          )
           }} 
           />
         <ChatTextInput onSendMessage={text => onSendMessage(text, sender = 'owner' ) } />

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const getTimeInFormat = time => {
+export default function getTimeInFormat(time) {
     if (time === '') {
       return '';
     }
