@@ -6,7 +6,8 @@ import ChatRoomRightItem from './ChatRoomRightItem';
 import ChatTextInput from './ChatTextInput';
 import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 import OpenAIAPI from './OpenAIAPI';
-import getTimeInFormat from './time'
+import getTimeInFormat from './time';
+import { genUniId } from './utilities/functions';
 
 
 const ChatRoomView = () => {
@@ -15,52 +16,40 @@ const ChatRoomView = () => {
   const [message, setMessage] = useState([]);
   async function onSendMessage(text, sender) {
     if (text != '' && sender === 'owner') {
-      setMessage(prevMessage => ([...prevMessage,{id: sender, text: text}]))
-      const gptResponse = await OpenAIAPI(text)
-      setMessage(prevMessage => ([...prevMessage,{id: 'gpt', text: gptResponse.text, time: getTimeInFormat(gptResponse.time)}]))
-      console.log(message)
+      setMessage(prevMessage => ([...prevMessage,{name: sender, text: text}]));
+      const gptResponse = await OpenAIAPI(text);
+      console.log("gptResponse: ", gptResponse);
+      setMessage(prevMessage => ([...prevMessage,{name: 'gpt', text: gptResponse.ReturnedMessage, time: getTimeInFormat(gptResponse.time)}]))
+      console.log("message: ", message)
     }
-  };
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, paddingTop: 4}}>
-        {/*<FlatList
+        <FlatList
           ref={flatList}
-          extraData={refresh}
-          inverted={true}
+          // extraData={refresh}
+          inverted={false}
           style={{paddingTop: 0, paddingBottom: 0}}
-          renderItem={() => {
-          message.map((message) => { 
-            if(message.id === 'owner') {
-              return <ChatRoomRightItem 
-              message= {message.text}
-              time = {message.time}
-              />
-            } else {
-              <ChatRoomLeftItem  
-              message= {message.text}
-              time = {message.time}
-              />
-            }
-            }
-          )
-          }} 
-          />*/}
-          {message.map((message) => { 
-            if(message.id === 'owner') {
-              return <ChatRoomRightItem 
-              message= {message.text}
-              time = {message.time}
-              />
-            } else {
-              <ChatRoomLeftItem  
-              message= {message.text}
-              time = {message.time}
-              />
-            }
-            }
-          )}
+          data={message}
+          renderItem={({item}) => {
+              if(item.name === 'owner') {
+                return <ChatRoomRightItem
+                key={ genUniId() }
+                message= {item.text}
+                time = {item.time}
+                />
+              } else if(item.name === 'gpt') {
+                return <ChatRoomLeftItem
+                key={ genUniId() }
+                message= {item.text}
+                time = {item.time}
+                />
+              }
+
+          }}
+          />
         <ChatTextInput onSendMessage={text => onSendMessage(text, sender = 'owner' ) } />
       </View>
     </SafeAreaView>

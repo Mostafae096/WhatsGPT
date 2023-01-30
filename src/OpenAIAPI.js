@@ -8,7 +8,7 @@ export default async function OpenAIAPI(text) {
       engine: 'text-davinci-003',
       prompt: text ,
       temperature: 0.7,
-      max_tokens: 7,
+      max_tokens: 200,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
@@ -21,10 +21,10 @@ export default async function OpenAIAPI(text) {
     sender : 'gpt3',
   }
   return (response)
-};
+}
 
-const text1 = 'say this is a test';
+// const text1 = 'say this is a test';
 
-const test1 = await OpenAIAPI(text1);
+// const test1 = await OpenAIAPI(text1);
 
-console.log(test1)
+// console.log(test1)

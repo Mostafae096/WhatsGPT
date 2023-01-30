@@ -11,9 +11,8 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@expo/webpack-config": "^0.17.2",
     "deprecated-react-native-prop-types": "^4.0.0",
-    "expo": "~47.0.12",
+    "expo": "^47.0.13",
     "expo-status-bar": "~1.4.2",
     "moment": "^2.29.4",
     "native-base": "^2.13.8",
@@ -26,15 +25,7 @@
     "react-native-web": "~0.18.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-loader": "^9.1.2",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "html-webpack-plugin": "^5.5.0",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.11.1"
+    "@babel/core": "~7.9.0"
   },
   "private": true
 }
