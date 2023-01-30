@@ -12,11 +12,11 @@ import getTimeInFormat from './time'
 const ChatRoomView = () => {
   const flatList = useRef();
   const [refresh, setRefresh] = useState(false);
-  const [message, setMessage] = useState('');
-  function onSendMessage(text, sender) {
+  const [message, setMessage] = useState([]);
+  async function onSendMessage(text, sender) {
     if (text != '' && sender === 'owner') {
       setMessage(prevMessage => ([...prevMessage,{id: sender, text: text}]))
-      gptResponse = OpenAIAPI().then(response => console.log(response))
+      const gptResponse = await OpenAIAPI(text)
       setMessage(prevMessage => ([...prevMessage,{id: 'gpt', text: gptResponse.text, time: getTimeInFormat(gptResponse.time)}]))
       console.log(message)
     }
@@ -25,7 +25,7 @@ const ChatRoomView = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, paddingTop: 4}}>
-        <FlatList
+        {/*<FlatList
           ref={flatList}
           extraData={refresh}
           inverted={true}
@@ -46,7 +46,21 @@ const ChatRoomView = () => {
             }
           )
           }} 
-          />
+          />*/}
+          {message.map((message) => { 
+            if(message.id === 'owner') {
+              return <ChatRoomRightItem 
+              message= {message.text}
+              time = {message.time}
+              />
+            } else {
+              <ChatRoomLeftItem  
+              message= {message.text}
+              time = {message.time}
+              />
+            }
+            }
+          )}
         <ChatTextInput onSendMessage={text => onSendMessage(text, sender = 'owner' ) } />
       </View>
     </SafeAreaView>

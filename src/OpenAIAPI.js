@@ -23,5 +23,8 @@ export default async function OpenAIAPI(text) {
   return (response)
 };
 
-//export default OpenAIAPI;
-//console.log(OpenAIAPI().then(response => console.log(response)))
+const text1 = 'say this is a test';
+
+const test1 = await OpenAIAPI(text1);
+
+console.log(test1)
