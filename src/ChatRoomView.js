@@ -1,5 +1,5 @@
-import React, { useRef, useState} from 'react';
-import {View, FlatList, SafeAreaView} from 'react-native';
+import React, { useEffect, useRef, useState} from 'react';
+import {View, FlatList, SafeAreaView, ScrollView } from 'react-native';
 //import _Divider from './_Divider';
 import ChatRoomLeftItem from './ChatRoomLeftItem';
 import ChatRoomRightItem from './ChatRoomRightItem';
@@ -21,15 +21,16 @@ const ChatRoomView = () => {
       console.log("gptResponse: ", gptResponse);
       setMessage(prevMessage => ([...prevMessage,{name: 'gpt', text: gptResponse.ReturnedMessage, time: getTimeInFormat(gptResponse.time)}]))
       console.log("message: ", message)
+      setRefresh(true)
     }
   }
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, paddingTop: 4}}>
-        <FlatList
+       <FlatList
           ref={flatList}
-          // extraData={refresh}
+          extraData={refresh}
           inverted={false}
           style={{paddingTop: 0, paddingBottom: 0}}
           data={message}
